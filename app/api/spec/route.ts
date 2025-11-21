@@ -1,5 +1,7 @@
 import { createClient } from '@/_shared/lib/supabase/server';
+import { markdownToStructuredData } from '@/app/api/onepager/_helpers/utils/markdownToStructuredData'; // New import
 import { generateSpec } from '@/app/api/spec/_helpers/utils/generateSpec';
+import { jsonToMarkdown } from '@/app/api/spec/_helpers/utils/specMarkdownUtils'; // New import
 import { randomUUID } from 'crypto';
 import { NextResponse } from 'next/server';
 
@@ -14,25 +16,39 @@ export const POST = async (req: Request) => {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    const { onePager, ideaId } = await req.json();
+    const { onePagerMarkdown, ideaId } = await req.json(); // Changed input
 
-    // Validate incoming 1-Pager JSON structure
-    // (A more robust validation could be added here using Zod if needed)
-    if (!onePager || typeof onePager !== 'object' || !ideaId) {
+    // Extract locale from the request URL
+    const url = new URL(req.url);
+    const pathnameParts = url.pathname.split('/');
+    const locale = pathnameParts[1]; // Assuming locale is always the first segment
+
+    // Validate incoming markdown and ideaId
+    if (!onePagerMarkdown || typeof onePagerMarkdown !== 'string' || !ideaId) {
       return NextResponse.json(
-        { error: 'Invalid 1-Pager data or Idea ID provided.' },
+        { error: 'Invalid 1-Pager markdown data or Idea ID provided.' }, // Updated error message
         { status: 400 },
       );
     }
 
+    // Convert markdown to structured data for generateSpec
+    const onePagerStructuredData = markdownToStructuredData(onePagerMarkdown);
+
     // Generate Spec using OpenAI
-    const specData = await generateSpec(onePager);
+    const specData = await generateSpec(onePagerStructuredData, locale); // Pass structured data
     const specId = randomUUID();
+
+    // Convert to Markdown
+    const markdownContent = jsonToMarkdown(specData);
 
     // Save Spec to DB
     const { data: spec, error: specError } = await supabase
       .from('specs')
-      .insert({ id: specId, idea_id: ideaId, data: specData })
+      .insert({
+        id: specId,
+        idea_id: ideaId,
+        data: { markdown: markdownContent },
+      }) // Save as markdown
       .select()
       .single();
 
@@ -45,7 +61,7 @@ export const POST = async (req: Request) => {
     }
 
     return NextResponse.json(
-      { spec: specData, specId: spec.id },
+      { spec: { markdown: markdownContent }, specId: spec.id }, // Update response
       { status: 200 },
     );
   } catch (error: unknown) {

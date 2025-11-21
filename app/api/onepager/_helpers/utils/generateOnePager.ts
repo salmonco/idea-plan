@@ -8,6 +8,7 @@ import OpenAI from 'openai';
 
 export const generateOnePager = async (
   ideaText: string,
+  locale: string, // New parameter
   retries = 0,
 ): Promise<AIGeneratedOnePagerSchema> => {
   const openai = new OpenAI({
@@ -15,7 +16,12 @@ export const generateOnePager = async (
   });
 
   try {
-    const prompt = ONE_PAGER_GENERATION_PROMPT.replace('{ideaText}', ideaText);
+    const languageInstruction = `Respond in ${locale === 'ko' ? 'Korean' : 'English'}.`;
+    let prompt = ONE_PAGER_GENERATION_PROMPT.replace(
+      '{LANGUAGE_INSTRUCTION}',
+      languageInstruction,
+    );
+    prompt = prompt.replace('{ideaText}', ideaText);
 
     const response = await openai.chat.completions.create({
       model: process.env.OPENAI_GPT_MODEL || 'gpt-3.5-turbo',
@@ -34,7 +40,7 @@ export const generateOnePager = async (
       console.warn(
         `LLM JSON mode failed, retrying with fallback prompt. Retry attempt ${retries + 1}`,
       );
-      return generateOnePagerFallback(ideaText);
+      return generateOnePagerFallback(ideaText, locale); // Pass locale to fallback
     }
     console.error('Failed to generate 1-Pager with OpenAI:', error);
     throw new Error('Failed to generate 1-Pager content.');

@@ -17,6 +17,11 @@ export const POST = async (req: Request) => {
 
     const { ideaText } = await req.json();
 
+    // Extract locale from the request URL
+    const url = new URL(req.url);
+    const pathnameParts = url.pathname.split('/');
+    const locale = pathnameParts[1]; // Assuming locale is always the first segment, e.g., /ko/api/onepager
+
     // Validate ideaText length
     if (!ideaText || ideaText.length < 10) {
       return NextResponse.json(
@@ -39,7 +44,7 @@ export const POST = async (req: Request) => {
     }
 
     // Generate 1-Pager using OpenAI
-    const onePagerData = await generateOnePager(ideaText);
+    const onePagerData = await generateOnePager(ideaText, locale);
     const ideaId = randomUUID();
 
     // Save initial idea to DB

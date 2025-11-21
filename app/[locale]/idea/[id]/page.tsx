@@ -1,18 +1,9 @@
-import { Badge } from '@/_shared/components/ui/badge';
 import {
   Card,
   CardContent,
   CardHeader,
   CardTitle,
 } from '@/_shared/components/ui/card';
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from '@/_shared/components/ui/table';
 import { APP_PATH } from '@/_shared/helpers/constants/appPath';
 import { createClient } from '@/_shared/lib/supabase/server';
 import { GenerateButtonClient } from '@/app/[locale]/idea/[id]/_clientBoundary/GenerateButtonClient';
@@ -112,26 +103,15 @@ const IdeaDetailPage = async ({ params }: Props) => {
           </CardHeader>
           <CardContent>
             {spec ? (
-              <ul className="space-y-2">
-                {spec.data.feature_list.map((feature) => (
-                  <li
-                    key={feature.title}
-                    className="flex items-center justify-between rounded-md border p-3">
-                    <span className="font-medium">{feature.title}</span>
-                    <Badge
-                      variant={
-                        feature.priority === 'P0' ? 'default' : 'secondary'
-                      }>
-                      {feature.priority}
-                    </Badge>
-                  </li>
-                ))}
-              </ul>
+              <MarkdownEditor onePager={spec} /> // Use MarkdownEditor for spec
             ) : (
               <GenerateButtonClient
                 text={t('GenerateSpec')}
                 apiPath="/api/spec"
-                payload={{ onePager: onePager?.data, ideaId: idea.id }}
+                payload={{
+                  onePagerMarkdown: onePager?.data.markdown,
+                  ideaId: idea.id,
+                }} // Updated payload
                 redirectPath={`/idea/${idea.id}`}
                 disabled={!onePager}
               />
@@ -146,35 +126,28 @@ const IdeaDetailPage = async ({ params }: Props) => {
           </CardHeader>
           <CardContent>
             {actionPlan ? (
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead className="w-[100px]">{t('Day')}</TableHead>
-                    <TableHead>{t('Task')}</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {actionPlan.data.timeline.map((item) => (
-                    <TableRow key={item.day}>
-                      <TableCell className="font-medium">{item.day}</TableCell>
-                      <TableCell>{item.task}</TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
+              <MarkdownEditor onePager={actionPlan} />
             ) : (
               <div className="flex flex-wrap gap-4">
                 <GenerateButtonClient
                   text={t('GenerateActionPlan7Days')}
                   apiPath="/api/action-plan"
-                  payload={{ spec: spec?.data, duration: 7, ideaId: idea.id }}
+                  payload={{
+                    specMarkdown: spec?.data.markdown,
+                    duration: 7,
+                    ideaId: idea.id,
+                  }} // Updated payload
                   redirectPath={`/idea/${idea.id}`}
                   disabled={!spec}
                 />
                 <GenerateButtonClient
                   text={t('GenerateActionPlan14Days')}
                   apiPath="/api/action-plan"
-                  payload={{ spec: spec?.data, duration: 14, ideaId: idea.id }}
+                  payload={{
+                    specMarkdown: spec?.data.markdown,
+                    duration: 14,
+                    ideaId: idea.id,
+                  }} // Updated payload
                   redirectPath={`/idea/${idea.id}`}
                   disabled={!spec}
                 />

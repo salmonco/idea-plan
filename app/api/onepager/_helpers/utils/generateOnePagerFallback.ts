@@ -7,13 +7,19 @@ import OpenAI from 'openai';
 
 export const generateOnePagerFallback = async (
   ideaText: string,
+  locale: string, // New parameter
 ): Promise<AIGeneratedOnePagerSchema> => {
   const openai = new OpenAI({
     apiKey: process.env.OPENAI_API_KEY,
   });
 
   try {
-    const prompt = ONE_PAGER_FALLBACK_PROMPT.replace('{ideaText}', ideaText);
+    const languageInstruction = `Respond in ${locale === 'ko' ? 'Korean' : 'English'}.`;
+    let prompt = ONE_PAGER_FALLBACK_PROMPT.replace(
+      '{LANGUAGE_INSTRUCTION}',
+      languageInstruction,
+    );
+    prompt = prompt.replace('{ideaText}', ideaText);
 
     const response = await openai.chat.completions.create({
       model: process.env.OPENAI_GPT_MODEL || 'gpt-3.5-turbo',
