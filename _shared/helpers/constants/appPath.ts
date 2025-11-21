@@ -1,5 +1,5 @@
 export const APP_PATH = {
-  HOME: '/',
+  ROOT: '/',
   AUTH: '/auth',
   LOGIN: '/login',
   DASHBOARD: '/dashboard',

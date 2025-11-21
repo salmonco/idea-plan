@@ -25,7 +25,7 @@ export const updateSession = async (request: NextRequest) => {
   }
 
   const isRootOrAuth =
-    request.nextUrl.pathname === '/' ||
+    request.nextUrl.pathname === APP_PATH.ROOT ||
     request.nextUrl.pathname.startsWith(APP_PATH.AUTH);
 
   if (user && isRootOrAuth) {

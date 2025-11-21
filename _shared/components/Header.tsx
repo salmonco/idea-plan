@@ -1,6 +1,7 @@
 'use client';
 
 import { Button } from '@/_shared/components/ui/button';
+import { APP_PATH } from '@/_shared/helpers/constants/appPath';
 import { signInWithGoogle } from '@/app/login/_helpers/utils/signInWithGoogle';
 import { signOut } from '@/app/login/_helpers/utils/signOut';
 import { User } from '@supabase/supabase-js';
@@ -21,7 +22,7 @@ export const Header = ({ user }: Props) => {
 
   return (
     <header className="flex items-center justify-between border-b p-4">
-      <Link href="/">
+      <Link href={APP_PATH.ROOT}>
         <h1 className="text-2xl font-bold">IdeaPlan</h1>
       </Link>
       {user ? (
