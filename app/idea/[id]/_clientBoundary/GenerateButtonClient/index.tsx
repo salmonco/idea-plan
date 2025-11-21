@@ -58,7 +58,7 @@ export const GenerateButtonClient = ({
       <Button
         onClick={handleGenerate}
         disabled={isLoading || disabled}
-        className="rounded-lg bg-blue-600 px-4 py-2 font-bold text-white shadow-lg transition-colors duration-300 hover:bg-blue-700 disabled:opacity-50">
+        className="font-bold">
         {isLoading ? 'Generating...' : text}
       </Button>
       {error && <p className="mt-2 text-sm text-red-500">{error}</p>}

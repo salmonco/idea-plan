@@ -1,3 +1,18 @@
+import { Badge } from '@/_shared/components/ui/badge';
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from '@/_shared/components/ui/card';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/_shared/components/ui/table';
 import { APP_PATH } from '@/_shared/helpers/constants/appPath';
 import { createClient } from '@/_shared/lib/supabase/server';
 import { GenerateButtonClient } from '@/app/idea/[id]/_clientBoundary/GenerateButtonClient';
@@ -71,93 +86,143 @@ const IdeaDetailPage = async ({ params }: Props) => {
 
       <div className="space-y-8">
         {/* 1-Pager Section */}
-        <div className="rounded-lg border p-5 shadow-sm">
-          <h2 className="mb-4 text-2xl font-semibold">1-Pager</h2>
-          {onePager ? (
-            <div className="space-y-3">
-              <p>
-                <strong>Problem:</strong> {onePager.data.problem}
+        <Card>
+          <CardHeader>
+            <CardTitle>1-Pager</CardTitle>
+          </CardHeader>
+          <CardContent>
+            {onePager ? (
+              <div className="space-y-4">
+                <div>
+                  <h3 className="font-semibold">Problem</h3>
+                  <p className="text-muted-foreground">
+                    {onePager.data.problem}
+                  </p>
+                </div>
+                <div>
+                  <h3 className="font-semibold">Target</h3>
+                  <p className="text-muted-foreground">
+                    {onePager.data.target}
+                  </p>
+                </div>
+                <div>
+                  <h3 className="font-semibold">Hypothesis</h3>
+                  <p className="text-muted-foreground">
+                    {onePager.data.hypothesis}
+                  </p>
+                </div>
+                <div>
+                  <h3 className="font-semibold">Features</h3>
+                  <div className="flex flex-wrap gap-2 pt-2">
+                    {onePager.data.features.map((f: string) => (
+                      <Badge key={f} variant="secondary">
+                        {f}
+                      </Badge>
+                    ))}
+                  </div>
+                </div>
+                <div>
+                  <h3 className="font-semibold">Monetization</h3>
+                  <p className="text-muted-foreground">
+                    {onePager.data.monetization}
+                  </p>
+                </div>
+                <div>
+                  <h3 className="font-semibold">Roadmap</h3>
+                  <div className="flex flex-wrap gap-2 pt-2">
+                    {onePager.data.roadmap.map((r: string) => (
+                      <Badge key={r} variant="secondary">
+                        {r}
+                      </Badge>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            ) : (
+              <p className="text-muted-foreground">
+                1-Pager not generated yet.
               </p>
-              <p>
-                <strong>Target:</strong> {onePager.data.target}
-              </p>
-              <p>
-                <strong>Hypothesis:</strong> {onePager.data.hypothesis}
-              </p>
-              <p>
-                <strong>Features:</strong>{' '}
-                {onePager.data.features.map((f: string) => (
-                  <span key={f}>{f}, </span>
-                ))}
-              </p>
-              <p>
-                <strong>Monetization:</strong> {onePager.data.monetization}
-              </p>
-              <p>
-                <strong>Roadmap:</strong>{' '}
-                {onePager.data.roadmap.map((r: string) => (
-                  <span key={r}>{r}, </span>
-                ))}
-              </p>
-            </div>
-          ) : (
-            <p className="text-gray-500">1-Pager not generated yet.</p>
-          )}
-        </div>
+            )}
+          </CardContent>
+        </Card>
 
         {/* Spec Section */}
-        <div className="rounded-lg border p-5 shadow-sm">
-          <h2 className="mb-4 text-2xl font-semibold">Specification</h2>
-          {spec ? (
-            <div>
-              {spec.data.feature_list.map((feature) => (
-                <p key={feature.title}>
-                  <strong>{feature.title}</strong>: {feature.priority}
-                </p>
-              ))}
-            </div>
-          ) : (
-            <GenerateButtonClient
-              text="Generate Spec"
-              apiPath="/api/spec"
-              payload={{ onePager: onePager?.data, ideaId: idea.id }}
-              redirectPath={`/idea/${idea.id}`}
-              disabled={!onePager}
-            />
-          )}
-        </div>
+        <Card>
+          <CardHeader>
+            <CardTitle>Specification</CardTitle>
+          </CardHeader>
+          <CardContent>
+            {spec ? (
+              <ul className="space-y-2">
+                {spec.data.feature_list.map((feature) => (
+                  <li
+                    key={feature.title}
+                    className="flex items-center justify-between rounded-md border p-3">
+                    <span className="font-medium">{feature.title}</span>
+                    <Badge
+                      variant={
+                        feature.priority === 'P0' ? 'default' : 'secondary'
+                      }>
+                      {feature.priority}
+                    </Badge>
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <GenerateButtonClient
+                text="Generate Spec"
+                apiPath="/api/spec"
+                payload={{ onePager: onePager?.data, ideaId: idea.id }}
+                redirectPath={`/idea/${idea.id}`}
+                disabled={!onePager}
+              />
+            )}
+          </CardContent>
+        </Card>
 
         {/* Action Plan Section */}
-        <div className="rounded-lg border p-5 shadow-sm">
-          <h2 className="mb-4 text-2xl font-semibold">Action Plan</h2>
-          {actionPlan ? (
-            <div>
-              {actionPlan.data.timeline.map((item) => (
-                <p key={item.day}>
-                  <strong>Day {item.day}</strong>: {item.task}
-                </p>
-              ))}
-            </div>
-          ) : (
-            <GenerateButtonClient
-              text="Generate Action Plan (7 Days)"
-              apiPath="/api/action-plan"
-              payload={{ spec: spec?.data, duration: 7, ideaId: idea.id }}
-              redirectPath={`/idea/${idea.id}`}
-              disabled={!spec}
-            />
-          )}
-          {!actionPlan && (
-            <GenerateButtonClient
-              text="Generate Action Plan (14 Days)"
-              apiPath="/api/action-plan"
-              payload={{ spec: spec?.data, duration: 14, ideaId: idea.id }}
-              redirectPath={`/idea/${idea.id}`}
-              disabled={!spec}
-              className="mt-2"
-            />
-          )}
-        </div>
+        <Card>
+          <CardHeader>
+            <CardTitle>Action Plan</CardTitle>
+          </CardHeader>
+          <CardContent>
+            {actionPlan ? (
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead className="w-[100px]">Day</TableHead>
+                    <TableHead>Task</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {actionPlan.data.timeline.map((item) => (
+                    <TableRow key={item.day}>
+                      <TableCell className="font-medium">{item.day}</TableCell>
+                      <TableCell>{item.task}</TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            ) : (
+              <div className="flex flex-wrap gap-4">
+                <GenerateButtonClient
+                  text="Generate Action Plan (7 Days)"
+                  apiPath="/api/action-plan"
+                  payload={{ spec: spec?.data, duration: 7, ideaId: idea.id }}
+                  redirectPath={`/idea/${idea.id}`}
+                  disabled={!spec}
+                />
+                <GenerateButtonClient
+                  text="Generate Action Plan (14 Days)"
+                  apiPath="/api/action-plan"
+                  payload={{ spec: spec?.data, duration: 14, ideaId: idea.id }}
+                  redirectPath={`/idea/${idea.id}`}
+                  disabled={!spec}
+                />
+              </div>
+            )}
+          </CardContent>
+        </Card>
       </div>
     </div>
   );

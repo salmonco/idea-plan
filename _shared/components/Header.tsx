@@ -14,8 +14,8 @@ type Props = {
 export const Header = ({ user }: Props) => {
   const router = useRouter();
 
-  const handleSignOut = () => {
-    signOut();
+  const handleSignOut = async () => {
+    await signOut();
     router.refresh();
   };
 
@@ -27,16 +27,12 @@ export const Header = ({ user }: Props) => {
       {user ? (
         <div className="flex items-center space-x-4">
           <span>Hello, {user.email}</span>
-          <Button
-            className="rounded-lg border px-4 py-2 text-sm shadow-md transition-shadow duration-300 hover:shadow-lg"
-            onClick={handleSignOut}>
+          <Button variant="outline" size="sm" onClick={handleSignOut}>
             Sign Out
           </Button>
         </div>
       ) : (
-        <Button
-          className="rounded-lg border px-4 py-2 text-sm shadow-md transition-shadow duration-300 hover:shadow-lg"
-          onClick={signInWithGoogle}>
+        <Button variant="outline" size="sm" onClick={signInWithGoogle}>
           Sign In
         </Button>
       )}

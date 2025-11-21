@@ -1,4 +1,11 @@
 import { Button } from '@/_shared/components/ui/button';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/_shared/components/ui/card';
 import { APP_PATH } from '@/_shared/helpers/constants/appPath';
 import { createClient } from '@/_shared/lib/supabase/server';
 import Link from 'next/link';
@@ -30,36 +37,36 @@ const DashboardPage = async () => {
 
   return (
     <div className="container mx-auto max-w-4xl p-4">
-      <h1 className="mb-6 text-center text-3xl font-bold">My Idea Plans</h1>
-
-      <div className="mb-4 flex justify-end">
+      <div className="mb-6 flex items-center justify-between">
+        <h1 className="text-3xl font-bold">My Idea Plans</h1>
         <Link href={APP_PATH.NEW_IDEA}>
-          <Button className="rounded-lg bg-indigo-600 px-4 py-2 font-bold text-white shadow-lg transition-colors duration-300 hover:bg-indigo-700">
-            Create New Idea
-          </Button>
+          <Button>Create New Idea</Button>
         </Link>
       </div>
 
       {ideas.length === 0 ? (
-        <p className="text-center text-lg text-gray-500">
-          No ideas yet. Start by creating a{' '}
-          <Link
-            href={APP_PATH.NEW_IDEA}
-            className="text-indigo-600 hover:underline">
-            new one
-          </Link>
-          !
-        </p>
+        <Card>
+          <CardContent className="pt-6">
+            <div className="text-center">
+              <p className="text-muted-foreground text-lg">No ideas yet.</p>
+              <Link href={APP_PATH.NEW_IDEA}>
+                <Button variant="link">Create your first one!</Button>
+              </Link>
+            </div>
+          </CardContent>
+        </Card>
       ) : (
         <div className="space-y-4">
           {ideas.map((idea) => (
             <Link key={idea.id} href={`/idea/${idea.id}`} passHref>
-              <div className="block cursor-pointer rounded-lg border border-gray-200 p-5 shadow-sm transition-shadow duration-200 hover:shadow-md">
-                <h2 className="text-xl font-semibold">{idea.idea_text}</h2>
-                <p className="mt-1 text-sm text-gray-500">
-                  Created on {new Date(idea.created_at).toLocaleDateString()}
-                </p>
-              </div>
+              <Card className="cursor-pointer transition-shadow duration-200 hover:shadow-md">
+                <CardHeader>
+                  <CardTitle>{idea.idea_text}</CardTitle>
+                  <CardDescription>
+                    Created on {new Date(idea.created_at).toLocaleDateString()}
+                  </CardDescription>
+                </CardHeader>
+              </Card>
             </Link>
           ))}
         </div>
