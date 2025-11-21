@@ -1,5 +1,9 @@
 import { updateSession } from '@/_shared/lib/supabase/proxy';
+import routing from '@/i18n/routing';
+import createMiddleware from 'next-intl/middleware';
 import { type NextRequest } from 'next/server';
+
+const handleI18nRouting = createMiddleware(routing);
 
 /**
  * Proxies the request to the updateSession function.
@@ -8,7 +12,8 @@ import { type NextRequest } from 'next/server';
  * @see https://nextjs.org/docs/app/api-reference/file-conventions/proxy
  */
 export const proxy = async (request: NextRequest) => {
-  return await updateSession(request);
+  const intlResponse = handleI18nRouting(request);
+  return await updateSession(request, intlResponse);
 };
 
 export const config = {
@@ -20,6 +25,6 @@ export const config = {
      * - favicon.ico (favicon file)
      * Feel free to modify this pattern to include more paths.
      */
-    '/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)',
+    '/((?!api|_next|_vercel|_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)',
   ],
 };

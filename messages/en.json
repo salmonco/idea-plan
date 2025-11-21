@@ -1,0 +1,56 @@
+{
+  "Header": {
+    "IdeaPlan": "IdeaPlan",
+    "Hello": "Hello",
+    "SignIn": "Sign In",
+    "SignOut": "Sign Out",
+    "Language": "Language"
+  },
+  "LoginPage": {
+    "WelcomeTitle": "Welcome to IdeaPlan",
+    "WelcomeDescription": "Sign in to continue to your dashboard",
+    "SignInWithGoogle": "Sign in with Google"
+  },
+  "DashboardPage": {
+    "MyIdeaPlans": "My Idea Plans",
+    "CreateNewIdea": "Create New Idea",
+    "NoIdeasYet": "No ideas yet.",
+    "CreateFirstOne": "Create your first one!",
+    "CreatedOn": "Created on",
+    "FailedToLoadIdeas": "Failed to load ideas."
+  },
+  "NewIdeaPage": {
+    "GenerateNewIdeaPlan": "Generate New Idea Plan",
+    "YourIdea": "Your Idea",
+    "IdeaPlaceholder": "e.g., 'An app for cafe baristas to memorize recipes'",
+    "IdeaMinLengthError": "Idea must be at least 10 characters long.",
+    "GenerateOnePager": "Generate 1-Pager",
+    "Generating": "Generating...",
+    "FailedToCreateOnePager": "Failed to create 1-Pager.",
+    "AnUnknownErrorOccurred": "An unknown error occurred.",
+    "DescribeIdea": "Start by describing your idea. We'll generate a 1-Pager to get you started."
+  },
+  "IdeaDetailPage": {
+    "Idea": "Idea",
+    "FailedToLoadIdeaDetails": "Failed to load idea details.",
+    "OnePager": "1-Pager",
+    "OnePagerNotGenerated": "1-Pager not generated yet. Create a new idea to generate one.",
+    "Edit": "Edit",
+    "Save": "Save",
+    "Saving": "Saving...",
+    "Cancel": "Cancel",
+    "Spec": "Specification",
+    "GenerateSpec": "Generate Spec",
+    "ActionPlan": "Action Plan",
+    "GenerateActionPlan7Days": "Generate Action Plan (7 Days)",
+    "GenerateActionPlan14Days": "Generate Action Plan (14 Days)",
+    "Day": "Day",
+    "Task": "Task",
+    "FailedToSaveChanges": "Failed to save changes."
+  },
+  "LandingPage": {
+    "Title": "Turn Your Ideas into Actionable Plans",
+    "Description": "From a spark of an idea to a full-fledged action plan. Let AI help you think, plan, and execute.",
+    "GetStarted": "Get Started"
+  }
+}
