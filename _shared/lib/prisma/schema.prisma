@@ -12,7 +12,7 @@ model Users {
   full_name  String?
   avatar_url String?
   created_at DateTime  @default(now())
-  updated_at DateTime? @updatedAt
+  updated_at DateTime? @updatedAt @default(now())
   deleted_at DateTime?
 
   ideas      Ideas[]
@@ -40,7 +40,7 @@ model OnePagers {
   idea_id    String   @db.Uuid
   data       Json
   created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
+  updated_at DateTime @updatedAt @default(now())
 
   idea Ideas @relation(fields: [idea_id], references: [id])
 
@@ -52,7 +52,7 @@ model Specs {
   idea_id    String   @db.Uuid
   data       Json
   created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
+  updated_at DateTime @updatedAt @default(now())
 
   idea Ideas @relation(fields: [idea_id], references: [id])
 
@@ -64,7 +64,7 @@ model ActionPlans {
   idea_id    String   @db.Uuid
   data       Json
   created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
+  updated_at DateTime @updatedAt @default(now())
 
   idea Ideas @relation(fields: [idea_id], references: [id])
 
