@@ -1,6 +1,7 @@
 'use client';
 
-import { createClient } from '@/_shared/lib/supabase/client';
+import { signInWithGoogle } from '@/app/login/_helpers/utils/signInWithGoogle';
+import { signOut } from '@/app/login/_helpers/utils/signOut';
 import { User } from '@supabase/supabase-js';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -11,10 +12,9 @@ type Props = {
 
 export const Header = ({ user }: Props) => {
   const router = useRouter();
-  const supabase = createClient();
 
-  const handleSignOut = async () => {
-    await supabase.auth.signOut();
+  const handleSignOut = () => {
+    signOut();
     router.refresh();
   };
 
@@ -27,17 +27,17 @@ export const Header = ({ user }: Props) => {
         <div className="flex items-center space-x-4">
           <span>Hello, {user.email}</span>
           <button
-            onClick={handleSignOut}
-            className="rounded-lg border px-4 py-2 text-sm shadow-md transition-shadow duration-300 hover:shadow-lg">
+            className="rounded-lg border px-4 py-2 text-sm shadow-md transition-shadow duration-300 hover:shadow-lg"
+            onClick={handleSignOut}>
             Sign Out
           </button>
         </div>
       ) : (
-        <Link href="/login">
-          <button className="rounded-lg border px-4 py-2 text-sm shadow-md transition-shadow duration-300 hover:shadow-lg">
-            Sign In
-          </button>
-        </Link>
+        <button
+          className="rounded-lg border px-4 py-2 text-sm shadow-md transition-shadow duration-300 hover:shadow-lg"
+          onClick={signInWithGoogle}>
+          Sign In
+        </button>
       )}
     </header>
   );

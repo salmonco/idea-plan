@@ -1,22 +1,11 @@
 'use client';
 
-import { createClient } from '@/_shared/lib/supabase/client';
+import { signInWithGoogle } from '@/app/login/_helpers/utils/signInWithGoogle';
 
 export const GoogleLoginButtonClient = () => {
-  const supabase = createClient();
-
-  const handleGoogleSignIn = async () => {
-    await supabase.auth.signInWithOAuth({
-      provider: 'google',
-      options: {
-        redirectTo: `${location.origin}/auth/callback`,
-      },
-    });
-  };
-
   return (
     <button
-      onClick={handleGoogleSignIn}
+      onClick={signInWithGoogle}
       className="flex gap-2 rounded-lg border px-4 py-2 text-lg shadow-md transition-shadow duration-300 hover:shadow-lg">
       <img
         src="https://www.svgrepo.com/show/355037/google.svg"
