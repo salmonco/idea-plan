@@ -1,0 +1,72 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Users {
+  id         String    @id @db.Uuid
+  email      String    @unique
+  full_name  String?
+  avatar_url String?
+  created_at DateTime  @default(now())
+  updated_at DateTime? @updatedAt
+  deleted_at DateTime?
+
+  ideas      Ideas[]
+
+  @@map("users")
+}
+
+model Ideas {
+  id         String   @id @default(uuid()) @db.Uuid
+  user_id    String   @db.Uuid
+  idea_text  String
+  created_at DateTime @default(now())
+
+  user Users @relation(fields: [user_id], references: [id])
+
+  onepagers   OnePagers[]
+  specs       Specs[]
+  actionPlans ActionPlans[]
+
+  @@map("ideas")
+}
+
+model OnePagers {
+  id         String   @id @default(uuid()) @db.Uuid
+  idea_id    String   @db.Uuid
+  data       Json
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  idea Ideas @relation(fields: [idea_id], references: [id])
+
+  @@map("one_pagers")
+}
+
+model Specs {
+  id         String   @id @default(uuid()) @db.Uuid
+  idea_id    String   @db.Uuid
+  data       Json
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  idea Ideas @relation(fields: [idea_id], references: [id])
+
+  @@map("specs")
+}
+
+model ActionPlans {
+  id         String   @id @default(uuid()) @db.Uuid
+  idea_id    String   @db.Uuid
+  data       Json
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  idea Ideas @relation(fields: [idea_id], references: [id])
+
+  @@map("action_plans")
+}
