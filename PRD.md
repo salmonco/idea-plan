@@ -243,70 +243,7 @@ POST /api/action-plan
 
 ---
 
-# 7. DB 스키마(초안)
-
-## 테이블: **users**
-
-| 필드       | 타입      | 설명                       |
-| ---------- | --------- | -------------------------- |
-| id         | uuid      | PK                         |
-| email      | text      | unique                     |
-| full_name  | text      |                            |
-| avatar_url | text      |                            |
-| created_at | timestamp | 처음 가입 시점             |
-| updated_at | timestamp | 회원탈퇴 후 다시 가입 시점 |
-| deleted_at | timestamp | 회원탈퇴 soft delete       |
-
----
-
-## 테이블: **ideas**
-
-| 필드       | 타입      | 설명         |
-| ---------- | --------- | ------------ |
-| id         | uuid      | PK           |
-| user_id    | uuid      | FK(users.id) |
-| idea_text  | text      | 초기 입력    |
-| created_at | timestamp |              |
-
----
-
-## 테이블: **onepagers**
-
-| 필드       | 타입      |
-| ---------- | --------- |
-| id         | uuid      |
-| idea_id    | uuid      |
-| data       | jsonb     |
-| created_at | timestamp |
-| updated_at | timestamp |
-
----
-
-## 테이블: **specs**
-
-| 필드       | 타입      |
-| ---------- | --------- |
-| id         | uuid      |
-| idea_id    | uuid      |
-| data       | jsonb     |
-| created_at | timestamp |
-| updated_at | timestamp |
-
----
-
-## 테이블: **action_plans**
-
-| 필드       | 타입      |
-| ---------- | --------- |
-| id         | uuid      |
-| idea_id    | uuid      |
-| data       | jsonb     |
-| created_at | timestamp |
-| updated_at | timestamp |
-
----
-
-# 8. 개발범위(MVP)
+# 7. 개발범위(MVP)
 
 ### **필수 포함**
 
@@ -328,7 +265,7 @@ POST /api/action-plan
 
 ---
 
-# 9. 일정(2 Week Sprint)
+# 8. 일정(2 Week Sprint)
 
 | 주차   | 작업                                                   | 상세             |
 | ------ | ------------------------------------------------------ | ---------------- |

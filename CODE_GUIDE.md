@@ -1,7 +1,9 @@
-1. 컴포넌트 타입 선언 시 기본적으로 type 키워드를 사용한다 (interface 키워드가 아니라).
+# Code Guide
 
-2. 컴포넌트 Prop 선언 시 기본적으로 해당 파일 내에서 타입명을 Prop으로 선언한다 (ex. LoginButtonProp이 아니라 그냥 Prop으로 선언).
+1. When declaring a component type, the type keyword is used by default (not the interface keyword).
 
-3. 함수 선언 시 기본적으로 화살표 함수 표현식을 사용한다. 디폴트 익스포트면 파일 최하단에 export default 컴포넌트명을 명시하고, 네임드 익스포트면 선언하는 라인에서 바로 export를 명시한다.
+2. When declaring a component prop, the type name is declared as Prop within the file by default (e.g., simply "Prop" instead of "LoginButtonProp").
 
-4. page.tsx에서는 Next.js 룰에 따라 디폴트 익스포트하고, 그외 Next.js 룰에 포함되지 않는 모든 파일에서는 네임드 익스포트한다.
+3. By default, arrow function expressions are used when declaring functions. For default exports, specify the "export default" component name at the bottom of the file. For named exports, specify the export directly on the declaration line.
+
+4. In page.tsx, default exports are performed according to Next.js rules. In all other files not included in Next.js rules, named exports are used.
