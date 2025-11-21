@@ -1,5 +1,8 @@
 import { onePagerInputSchema } from '@/app/api/spec/_helpers/schemas/onePagerInput';
-import { SpecSchema, specSchema } from '@/app/idea/[id]/_helpers/schemas/spec';
+import {
+  SpecSchema,
+  specSchema,
+} from '@/app/[locale]/idea/[id]/_helpers/schemas/spec';
 import OpenAI from 'openai';
 import z from 'zod';
 

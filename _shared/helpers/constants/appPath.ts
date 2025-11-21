@@ -1,6 +1,6 @@
 export const APP_PATH = {
   ROOT: '/',
-  AUTH: '/auth',
+  AUTH_CALLBACK: '/auth/callback',
   LOGIN: '/login',
   DASHBOARD: '/dashboard',
   IDEA: '/idea',

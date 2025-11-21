@@ -1,7 +1,8 @@
 import { createClient } from '@/_shared/lib/supabase/server';
 import { generateOnePager } from '@/app/api/onepager/_helpers/utils/generateOnePager';
-import { NextResponse } from 'next/server';
+import { jsonToMarkdown } from '@/app/api/onepager/_helpers/utils/markdownUtils';
 import { randomUUID } from 'crypto';
+import { NextResponse } from 'next/server';
 
 export const POST = async (req: Request) => {
   try {
@@ -56,15 +57,15 @@ export const POST = async (req: Request) => {
 
     const onePagerId = randomUUID();
     const now = new Date().toISOString();
+    const markdownContent = jsonToMarkdown(onePagerData);
+
     // Save 1-Pager to DB
-    const { error: onePagerError } = await supabase
-      .from('one_pagers')
-      .insert({
-        id: onePagerId,
-        idea_id: ideaId,
-        data: onePagerData,
-        updated_at: now,
-      });
+    const { error: onePagerError } = await supabase.from('one_pagers').insert({
+      id: onePagerId,
+      idea_id: ideaId,
+      data: { markdown: markdownContent },
+      updated_at: now,
+    });
 
     if (onePagerError) {
       console.error('Error saving 1-Pager:', onePagerError);
@@ -75,7 +76,7 @@ export const POST = async (req: Request) => {
     }
 
     return NextResponse.json(
-      { onePager: onePagerData, ideaId: ideaId },
+      { onePager: { markdown: markdownContent }, ideaId: ideaId },
       { status: 200 },
     );
   } catch (error: unknown) {

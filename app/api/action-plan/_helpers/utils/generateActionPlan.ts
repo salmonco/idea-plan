@@ -1,7 +1,7 @@
 import {
   actionPlanSchema,
   ActionPlanSchema,
-} from '@/app/idea/[id]/_helpers/schemas/actionPlan';
+} from '@/app/[locale]/idea/[id]/_helpers/schemas/actionPlan';
 import OpenAI from 'openai';
 
 export const generateActionPlan = async (
