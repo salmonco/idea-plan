@@ -1,3 +1,4 @@
+import { APP_PATH } from '@/_shared/helpers/constants/appPath';
 import { createClient } from '@/_shared/lib/supabase/server';
 import { GenerateButtonClient } from '@/app/idea/[id]/_clientBoundary/GenerateButtonClient';
 import { actionPlanSchema } from '@/app/idea/[id]/_helpers/schemas/actionPlan';
@@ -20,7 +21,7 @@ const IdeaDetailPage = async ({ params }: Props) => {
   } = await supabase.auth.getUser();
 
   if (!user) {
-    redirect('/login');
+    redirect(APP_PATH.LOGIN);
   }
 
   const { data: ideaData, error: ideaError } = await supabase

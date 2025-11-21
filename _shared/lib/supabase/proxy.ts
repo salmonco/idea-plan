@@ -1,3 +1,4 @@
+import { APP_PATH } from '@/_shared/helpers/constants/appPath';
 import { createClient } from '@/_shared/lib/supabase/server';
 import { NextResponse, type NextRequest } from 'next/server';
 
@@ -15,21 +16,21 @@ export const updateSession = async (request: NextRequest) => {
 
   if (
     !user &&
-    !request.nextUrl.pathname.startsWith('/login') &&
-    !request.nextUrl.pathname.startsWith('/auth')
+    !request.nextUrl.pathname.startsWith(APP_PATH.LOGIN) &&
+    !request.nextUrl.pathname.startsWith(APP_PATH.AUTH)
   ) {
     const url = request.nextUrl.clone();
-    url.pathname = '/login';
+    url.pathname = APP_PATH.LOGIN;
     return NextResponse.redirect(url);
   }
 
   const isRootOrAuth =
     request.nextUrl.pathname === '/' ||
-    request.nextUrl.pathname.startsWith('/auth');
+    request.nextUrl.pathname.startsWith(APP_PATH.AUTH);
 
   if (user && isRootOrAuth) {
     const url = request.nextUrl.clone();
-    url.pathname = '/dashboard';
+    url.pathname = APP_PATH.DASHBOARD;
     return NextResponse.redirect(url);
   }
 
