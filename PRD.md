@@ -245,20 +245,21 @@ POST /api/action-plan
 
 # 7. DB 스키마(초안)
 
-## 테이블: **user**
+## 테이블: **users**
 
 | 필드       | 타입      | 설명                       |
 | ---------- | --------- | -------------------------- |
 | id         | uuid      | PK                         |
-| name       | text      |                            |
 | email      | text      | unique                     |
+| full_name  | text      |                            |
+| avatar_url | text      |                            |
 | created_at | timestamp | 처음 가입 시점             |
 | updated_at | timestamp | 회원탈퇴 후 다시 가입 시점 |
 | deleted_at | timestamp | 회원탈퇴 soft delete       |
 
 ---
 
-## 테이블: **idea**
+## 테이블: **ideas**
 
 | 필드       | 타입      | 설명         |
 | ---------- | --------- | ------------ |
@@ -269,7 +270,7 @@ POST /api/action-plan
 
 ---
 
-## 테이블: **onepager**
+## 테이블: **onepagers**
 
 | 필드       | 타입      |
 | ---------- | --------- |
@@ -281,7 +282,7 @@ POST /api/action-plan
 
 ---
 
-## 테이블: **spec**
+## 테이블: **specs**
 
 | 필드       | 타입      |
 | ---------- | --------- |
@@ -293,7 +294,7 @@ POST /api/action-plan
 
 ---
 
-## 테이블: **action_plan**
+## 테이블: **action_plans**
 
 | 필드       | 타입      |
 | ---------- | --------- |
