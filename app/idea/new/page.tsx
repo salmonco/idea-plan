@@ -1,5 +1,6 @@
 'use client';
 
+import { Button } from '@/_shared/components/ui/button';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
@@ -72,12 +73,12 @@ const NewIdeaPage = () => {
           {error && <p className="mt-2 text-sm text-red-600">{error}</p>}
         </div>
 
-        <button
+        <Button
           type="submit"
           className="flex w-full justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-lg font-medium text-white shadow-sm hover:bg-indigo-700 focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:outline-none disabled:opacity-50"
           disabled={isLoading}>
           {isLoading ? 'Generating 1-Pager...' : 'Generate 1-Pager'}
-        </button>
+        </Button>
       </form>
     </div>
   );

@@ -1,3 +1,4 @@
+import { Button } from '@/_shared/components/ui/button';
 import { APP_PATH } from '@/_shared/helpers/constants/appPath';
 import { createClient } from '@/_shared/lib/supabase/server';
 import Link from 'next/link';
@@ -33,9 +34,9 @@ const DashboardPage = async () => {
 
       <div className="mb-4 flex justify-end">
         <Link href={APP_PATH.NEW_IDEA}>
-          <button className="rounded-lg bg-indigo-600 px-4 py-2 font-bold text-white shadow-lg transition-colors duration-300 hover:bg-indigo-700">
+          <Button className="rounded-lg bg-indigo-600 px-4 py-2 font-bold text-white shadow-lg transition-colors duration-300 hover:bg-indigo-700">
             Create New Idea
-          </button>
+          </Button>
         </Link>
       </div>
 

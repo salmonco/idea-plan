@@ -1,5 +1,6 @@
 'use client';
 
+import { Button } from '@/_shared/components/ui/button';
 import { signInWithGoogle } from '@/app/login/_helpers/utils/signInWithGoogle';
 import { signOut } from '@/app/login/_helpers/utils/signOut';
 import { User } from '@supabase/supabase-js';
@@ -26,18 +27,18 @@ export const Header = ({ user }: Props) => {
       {user ? (
         <div className="flex items-center space-x-4">
           <span>Hello, {user.email}</span>
-          <button
+          <Button
             className="rounded-lg border px-4 py-2 text-sm shadow-md transition-shadow duration-300 hover:shadow-lg"
             onClick={handleSignOut}>
             Sign Out
-          </button>
+          </Button>
         </div>
       ) : (
-        <button
+        <Button
           className="rounded-lg border px-4 py-2 text-sm shadow-md transition-shadow duration-300 hover:shadow-lg"
           onClick={signInWithGoogle}>
           Sign In
-        </button>
+        </Button>
       )}
     </header>
   );
